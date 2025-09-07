@@ -58,7 +58,7 @@ const displayCategories = (plants) =>{
       class="rounded-xl h-50 w-100" />
     </figure>
     <div class="card-body ">
-    <h2 class="card-title plant-name " onclick ="identifyDetails(${plant.id})">${plant.name}</h2>
+    <button class="card-title plant-name " onclick ="identifyDetails(${plant.id})">${plant.name}</button>
     <p>${plant.description}</p>
 
         <div class="flex justify-between items-center">
@@ -169,7 +169,8 @@ total = total - price ;
 }
 
 const identifyDetails = (id)=>{
-  fetch(`https://openapi.programming-hero.com/api/plant/${id}`);
+  loading(true);
+  fetch(`https://openapi.programming-hero.com/api/plant/${id}`)
   .then(response=>response.json())
   .then(details=> displayDetails(details.plants))
 }
@@ -177,7 +178,40 @@ const identifyDetails = (id)=>{
 const displayDetails = (details)=>{
   const showModal = document.getElementById('show-modal');
   showModal.innerHTML = "";
-  
+  const div = document.createElement('div');
+  div.innerHTML = `
+<dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+  <div class="modal-box">
+    <figure class="px-5 pt-5">
+    <img
+      src="${details.image}"
+      alt="plant image"
+      class="rounded-xl h-50 w-100" />
+    </figure>
+    <div class="card-body ">
+    <h2 class="card-title">${details.name}</h2>
+    <p>${details.description}</p>
+
+        <div class="flex justify-between items-center">
+        <div>
+            <button class="btn bg-[#DCFCE7] rounded-3xl">${details.category}</button>
+        </div>
+        <div>
+            <p class="text-xl font-bold">৳<span>${details.price}</span></p>
+        </div>
+        </div>
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+  `
+showModal.appendChild(div);
+loading(false);
+   my_modal_5.showModal();
 }
 
 
