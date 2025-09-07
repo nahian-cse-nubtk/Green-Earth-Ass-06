@@ -175,7 +175,9 @@ const identifyDetails = (id)=>{
 }
 
 const displayDetails = (details)=>{
-  const showModal = document.getElementById('show-modal')
+  const showModal = document.getElementById('show-modal');
+  showModal.innerHTML = "";
+  
 }
 
 
