@@ -43,7 +43,7 @@ const displayCategories = (plants) =>{
       class="rounded-xl h-50 w-100" />
     </figure>
     <div class="card-body ">
-    <h2 class="card-title">${plant.name}</h2>
+    <h2 class="card-title plant-name">${plant.name}</h2>
     <p>${plant.description}</p>
 
         <div class="flex justify-between items-center">
@@ -51,16 +51,17 @@ const displayCategories = (plants) =>{
             <button class="btn bg-[#DCFCE7] rounded-3xl">${plant.category}</button>
         </div>
         <div>
-            <p class="text-xl font-bold">৳<span>${plant.price}</span></p>
+            <p class="text-xl font-bold">৳<span class = "each-card-price">${plant.price}</span></p>
         </div>
         </div>
 
-      <button class="btn btn-primary bg-[#15803D] rounded-3xl">Add to Cart</button>
+      <button class=" card-button btn btn-primary bg-[#15803D] rounded-3xl">Add to Cart</button>
     </div>
   </div>
     `
     cardCategory.appendChild(div);
     })
+    selectedCard();
 }
 
 const selectedCatagory = ()=>{
@@ -79,5 +80,84 @@ for(let categoriesName of allCategoriesName) {
   });
 }
 }
+
+const selectedCard = ()=>{
+  const allCardButton = document.querySelectorAll('.card-button');
+
+  for(let cardButton of allCardButton){
+
+    cardButton.addEventListener("click", ()=> {
+      const card = cardButton.closest(".card");
+      const getPlantName = card.querySelector(".plant-name");
+      const getPrice = card.querySelector(".each-card-price");
+      const price = parseInt(getPrice.innerText);
+      const plantName = getPlantName.innerText;
+      displayPriceIncart(price,plantName);
+    })
+  }
+}
+
+const displayPriceIncart = (price,name)=>{
+       totalPrice(price);
+  const cartElement = document.getElementById('cart-element');
+
+  const div = document.createElement('div');
+  div.classList.add('flex', 'justify-between', 'items-center', 'bg-[#F0FDF4]', 'p-3',"icon-element");
+
+  div.innerHTML = `
+  <div>
+            <h1 class="text-xl font-semibold">${name}</h1>
+            <p >৳<span class= "price-every-cart">${price}</span> x 1</p>
+        </div>
+        <div class = "cross-icon">
+            <i class="fa-solid fa-xmark "></i>
+        </div>
+
+  `
+ cartElement.appendChild(div);
+crossIconFunctionality();
+}
+let total = 0;
+
+const totalPrice = (price)=>{
+
+  total = total + price ;
+
+  const priceTotalShow = document.getElementById('total-price')
+  priceTotalShow.innerText = ""
+  priceTotalShow.innerText = total ;
+}
+
+const crossIconFunctionality = ()=>{
+const allCrossIcon = document.querySelectorAll('.cross-icon')
+
+for(let icon of allCrossIcon){
+
+  icon.addEventListener("click", ()=>{
+    const iconElement = icon.closest('.icon-element');
+    const priceOfCart = iconElement.querySelector('.price-every-cart');
+    const eachPrice = parseInt(priceOfCart.innerText);
+    decreaseTotal(eachPrice);
+    iconElement.innerHTML = "";
+    iconElement.classList.remove('flex', 'justify-between', 'items-center', 'bg-[#F0FDF4]', 'p-3');
+  })
+
+}
+
+}
+
+const decreaseTotal = (price)=>{
+total = total - price ;
+
+  const priceTotalShow = document.getElementById('total-price')
+  priceTotalShow.innerText = ""
+  priceTotalShow.innerText = total ;
+}
+
+
+
+
+
+
 categoriesLoad();
 catchAllTree();
