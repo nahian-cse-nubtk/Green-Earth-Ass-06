@@ -108,6 +108,7 @@ const selectedCard = ()=>{
       const getPrice = card.querySelector(".each-card-price");
       const price = parseInt(getPrice.innerText);
       const plantName = getPlantName.innerText;
+      alert(`${plantName} is being selected!`)
       displayPriceIncart(price,plantName);
     })
   }
