@@ -1,3 +1,15 @@
+const loading = (value)=>{
+  const spiner = document.querySelector('.spiner');
+  if(value===true){
+    spiner.classList.remove('hidden');
+
+  }
+  else{
+    spiner.classList.add('hidden');
+  }
+}
+
+
 const categoriesLoad = ()=>{
     fetch('https://openapi.programming-hero.com/api/categories')
     .then(response=> response.json())
@@ -18,13 +30,16 @@ const displayCategoriesName = (categories)=>{
     selectedCatagory();
 }
 const identifyCategories =(id)=>{
+ loading(true);
     fetch(`https://openapi.programming-hero.com/api/category/${id}`)
     .then(res=>res.json())
     .then(data=>displayCategories(data.plants))
 
+
 }
 
 const catchAllTree =()=>{
+   loading(true);
     fetch('https://openapi.programming-hero.com/api/plants')
     .then(response=> response.json())
     .then(allData=>displayCategories(allData.plants))
@@ -43,7 +58,7 @@ const displayCategories = (plants) =>{
       class="rounded-xl h-50 w-100" />
     </figure>
     <div class="card-body ">
-    <h2 class="card-title plant-name">${plant.name}</h2>
+    <h2 class="card-title plant-name " onclick ="identifyDetails(${plant.id})">${plant.name}</h2>
     <p>${plant.description}</p>
 
         <div class="flex justify-between items-center">
@@ -61,6 +76,7 @@ const displayCategories = (plants) =>{
     `
     cardCategory.appendChild(div);
     })
+    loading(false);
     selectedCard();
 }
 
@@ -141,9 +157,7 @@ for(let icon of allCrossIcon){
     iconElement.innerHTML = "";
     iconElement.classList.remove('flex', 'justify-between', 'items-center', 'bg-[#F0FDF4]', 'p-3');
   })
-
 }
-
 }
 
 const decreaseTotal = (price)=>{
@@ -154,8 +168,15 @@ total = total - price ;
   priceTotalShow.innerText = total ;
 }
 
+const identifyDetails = (id)=>{
+  fetch(`https://openapi.programming-hero.com/api/plant/${id}`);
+  .then(response=>response.json())
+  .then(details=> displayDetails(details.plants))
+}
 
-
+const displayDetails = (details)=>{
+  const showModal = document.getElementById('show-modal')
+}
 
 
 
