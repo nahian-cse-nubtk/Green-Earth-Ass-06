@@ -3,3 +3,10 @@
   grid-template-columns: 1fr 7fr 2fr;
   gap: 5px;
 }
+
+@media (max-width: 640px){
+  .card-section{
+    grid-template-columns: 1fr;
+    
+  }
+}
